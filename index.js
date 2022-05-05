@@ -23,16 +23,27 @@ const client = new MongoClient(uri, {
 const run = async () => {
     try {
         await client.connect();
-        const serviceCollections = client
+
+        // ==== Setting api for Services ====
+        const serviceCollection = client
             .db("Assign-11-Electro-Vally")
             .collection("services");
-
-        // ==== Setting api for services ====
         app.get("/services", async (req, res) => {
             const query = {};
-            const cursor = serviceCollections.find(query);
+            const cursor = serviceCollection.find(query);
             const services = await cursor.toArray();
             res.send(services);
+        });
+
+        // ==== Setting api for Inventories ====
+        const inventoriesCollection = client
+            .db("Assign-11-Electro-Vally")
+            .collection("inventories");
+        app.get("/inventories", async (req, res) => {
+            const query = {};
+            const cursor = inventoriesCollection.find(query);
+            const inventories = await cursor.toArray();
+            res.send(inventories);
         });
     } finally {
         // to close connection
