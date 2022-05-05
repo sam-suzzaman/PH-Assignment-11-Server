@@ -60,6 +60,14 @@ const run = async () => {
             const result = await inventoriesCollection.insertOne(newInventory);
             res.send(result);
         });
+
+        // +++++++++ Setting Delete API +++++++++++
+        app.delete("/inventories/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = inventoriesCollection.deleteOne(query);
+            res.send(result);
+        });
     } finally {
         // to close connection
     }
