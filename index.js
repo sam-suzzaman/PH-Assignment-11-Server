@@ -76,6 +76,25 @@ const run = async () => {
             const result = inventoriesCollection.deleteOne(query);
             res.send(result);
         });
+
+        // ######### Setting Update API #########
+        app.put("/inventories/:id", async (req, res) => {
+            const id = req.params.id;
+            const updatedInventory = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    quantity: updatedInventory.quantity,
+                },
+            };
+            const result = await inventoriesCollection.updateOne(
+                filter,
+                updatedDoc,
+                options
+            );
+            res.send(result);
+        });
     } finally {
         // to close connection
     }
