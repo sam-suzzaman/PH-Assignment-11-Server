@@ -46,6 +46,14 @@ const run = async () => {
             res.send(inventories);
         });
 
+        // ==== Setting api for Inventories -> Limited Items ====
+        app.get("/inventoryCount", async (req, res) => {
+            const query = {};
+            const cursor = inventoriesCollection.find(query).limit(6);
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
         // ==== Setting api for Inventories -> Signle Item ====
         app.get("/inventories/:id", async (req, res) => {
             const id = req.params.id;
