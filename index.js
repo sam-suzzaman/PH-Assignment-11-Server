@@ -53,6 +53,13 @@ const run = async () => {
             const inventory = await inventoriesCollection.findOne(query);
             res.send(inventory);
         });
+
+        // -------- Setting Post API to Add Inventory -------
+        app.post("/inventories", async (req, res) => {
+            const newInventory = req.body;
+            const result = await inventoriesCollection.insertOne(newInventory);
+            res.send(result);
+        });
     } finally {
         // to close connection
     }
