@@ -62,6 +62,15 @@ const run = async () => {
             res.send(inventory);
         });
 
+        // ==== Setting api for finding My_Item ====
+        app.get("/myitems", async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = inventoriesCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
         // -------- Setting Post API to Add Inventory -------
         app.post("/inventories", async (req, res) => {
             const newInventory = req.body;
