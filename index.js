@@ -71,6 +71,28 @@ const run = async () => {
             res.send(result);
         });
 
+        // ==== Setting api for Company Info ====
+        const companyInfoCollection = client
+            .db("Assign-11-Electro-Vally")
+            .collection("company-info");
+        app.get("/companyinfo", async (req, res) => {
+            const query = {};
+            const cursor = companyInfoCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
+        // ==== Setting api for Blogs ====
+        const blogsCollection = client
+            .db("Assign-11-Electro-Vally")
+            .collection("Blog-Data");
+        app.get("/blogs", async (req, res) => {
+            const query = {};
+            const cursor = blogsCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
         // -------- Setting Post API to Add Inventory -------
         app.post("/inventories", async (req, res) => {
             const newInventory = req.body;
